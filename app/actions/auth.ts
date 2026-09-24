@@ -34,7 +34,7 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
     path: "/",
     expires: new Date(session.expire),
   });
-  redirect("/admin/autos");
+  redirect("/admin");
 }
 
 export async function logout() {

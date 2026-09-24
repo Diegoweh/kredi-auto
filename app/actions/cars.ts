@@ -6,7 +6,7 @@ import { ID, Permission, Role } from "node-appwrite";
 import { createAdminClient, requireAdmin } from "@/lib/appwrite/server";
 import { CARS_TABLE_ID, CAR_PHOTOS_BUCKET_ID, DATABASE_ID } from "@/lib/appwrite/config";
 import { CARS_TAG, getCarByIdAdmin } from "@/lib/cars";
-import { slugify } from "@/lib/car-types";
+import { CAR_STATUSES, slugify, type CarStatus } from "@/lib/car-types";
 import { carSchema, fieldErrors, MAX_PHOTO_BYTES, type FieldErrors } from "@/lib/validation";
 
 export type CarFormState = { errors?: FieldErrors; message?: string };
@@ -82,3 +82,12 @@ export async function uploadCarPhoto(formData: FormData): Promise<{ id?: string;
   }
 }
 
+
+/** Quick status change from the admin list (e.g. mark as sold). */
+export async function setCarStatus(id: string, status: CarStatus) {
+  await requireAdmin();
+  if (!CAR_STATUSES.includes(status)) return;
+  const { tables } = createAdminClient();
+  await tables.updateRow({ databaseId: DATABASE_ID, tableId: CARS_TABLE_ID, rowId: id, data: { status } });
+  updateTag(CARS_TAG);
+}

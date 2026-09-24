@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const items = [
+  { href: "/admin", label: "Resumen" },
   { href: "/admin/autos", label: "Autos" },
   { href: "/admin/solicitudes", label: "Solicitudes de venta" },
 ];
@@ -16,7 +17,9 @@ export function AdminNav() {
         <Link
           key={item.href}
           href={item.href}
-          aria-current={pathname.startsWith(item.href) ? "page" : undefined}
+          aria-current={
+            (item.href === "/admin" ? pathname === item.href : pathname.startsWith(item.href)) ? "page" : undefined
+          }
           className="border-b-2 border-transparent py-2 text-muted hover:text-ink aria-[current=page]:border-brand aria-[current=page]:text-ink"
         >
           {item.label}

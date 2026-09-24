@@ -26,7 +26,8 @@ export default function PanelLayout({ children }: LayoutProps<"/admin">) {
         </div>
       </header>
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
-        <Suspense fallback={<p className="text-muted">Cargando…</p>}>{children}</Suspense>
+        {/* loading.tsx files provide the Suspense boundaries, so navigations render instantly */}
+        {children}
       </main>
     </>
   );

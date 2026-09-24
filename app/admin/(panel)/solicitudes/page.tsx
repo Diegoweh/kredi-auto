@@ -28,7 +28,7 @@ export default async function SellRequestsPage() {
 
       <ul className="mt-6 space-y-4">
         {requests.map((r) => (
-          <li key={r.id} className="rounded-xl border border-line bg-white p-4 sm:p-6">
+          <li key={r.id} id={r.id} className="scroll-mt-6 rounded-xl border border-line bg-white p-4 target:border-brand sm:p-6">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-lg font-semibold">
