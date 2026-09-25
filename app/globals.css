@@ -69,6 +69,48 @@
   }
 }
 
+/* Transparent range input whose thumb alone takes pointer events, so two can overlap. */
+@utility range-thumb {
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  width: 100%;
+  &:focus-visible {
+    outline: none;
+  }
+  &::-webkit-slider-thumb {
+    appearance: none;
+    pointer-events: auto;
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 9999px;
+    background: #fff;
+    border: 2px solid var(--color-brand);
+    box-shadow: 0 1px 3px rgb(15 23 42 / 0.2);
+    cursor: grab;
+    transition: box-shadow 150ms;
+  }
+  &::-moz-range-thumb {
+    pointer-events: auto;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 9999px;
+    background: #fff;
+    border: 2px solid var(--color-brand);
+    box-shadow: 0 1px 3px rgb(15 23 42 / 0.2);
+    cursor: grab;
+  }
+  &:active::-webkit-slider-thumb {
+    cursor: grabbing;
+  }
+  &:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-brand) 25%, transparent);
+  }
+  &:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-brand) 25%, transparent);
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;

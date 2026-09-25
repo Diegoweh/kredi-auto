@@ -2,11 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
-import { bodyTypeLabel, SORTS, transmissionLabel, TRANSMISSIONS, type BodyType } from "@/lib/car-types";
-import { formatPrice } from "@/lib/format";
+import { bodyTypeLabel, PRICE_STEP, SORTS, transmissionLabel, TRANSMISSIONS, type BodyType } from "@/lib/car-types";
 import { CloseIcon, FilterIcon } from "@/components/icons";
-
-const PRICE_STEPS = [150_000, 200_000, 250_000, 300_000, 350_000, 400_000, 500_000, 600_000, 800_000, 1_000_000];
+import { PriceRange } from "./price-range";
 
 interface Values {
   marca?: string;
@@ -21,7 +19,12 @@ interface Values {
 
 interface CarFiltersProps {
   values: Values;
-  options: { brands: string[]; years: number[]; bodyTypes: BodyType[] };
+  options: {
+    brands: string[];
+    years: number[];
+    bodyTypes: BodyType[];
+    price: { min: number; max: number } | null;
+  };
   total: number;
 }
 
@@ -122,7 +125,10 @@ export function CarFilters({ values, options, total }: CarFiltersProps) {
           <Field label="Marca" htmlFor="marca">
             <select id="marca" name="marca" defaultValue={values.marca ?? ""} className="field">
               <option value="">Todas</option>
-              {options.brands.map((b) => (
+              {(values.marca && !options.brands.includes(values.marca)
+                ? [values.marca, ...options.brands]
+                : options.brands
+              ).map((b) => (
                 <option key={b} value={b}>
                   {b}
                 </option>
@@ -165,24 +171,17 @@ export function CarFilters({ values, options, total }: CarFiltersProps) {
 
           <fieldset>
             <legend className="mb-2 text-sm font-semibold">Precio</legend>
-            <div className="grid grid-cols-2 gap-3">
-              <select name="precioMin" aria-label="Precio mínimo" defaultValue={values.precioMin ?? ""} className="field">
-                <option value="">Mínimo</option>
-                {PRICE_STEPS.map((p) => (
-                  <option key={p} value={p}>
-                    {formatPrice(p)}
-                  </option>
-                ))}
-              </select>
-              <select name="precioMax" aria-label="Precio máximo" defaultValue={values.precioMax ?? ""} className="field">
-                <option value="">Máximo</option>
-                {PRICE_STEPS.map((p) => (
-                  <option key={p} value={p}>
-                    {formatPrice(p)}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {options.price && options.price.max > options.price.min ? (
+              <PriceRange
+                bounds={options.price}
+                step={PRICE_STEP}
+                defaultMin={values.precioMin}
+                defaultMax={values.precioMax}
+                onCommit={() => !open && apply()}
+              />
+            ) : (
+              <p className="text-sm text-muted">Sin rango disponible.</p>
+            )}
           </fieldset>
 
           <fieldset>

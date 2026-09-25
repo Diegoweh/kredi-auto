@@ -53,6 +53,9 @@ export const SORTS = {
 } as const;
 export type Sort = keyof typeof SORTS;
 
+/** Granularity of the price range filter. */
+export const PRICE_STEP = 10_000;
+
 export interface Car {
   id: string;
   slug: string;

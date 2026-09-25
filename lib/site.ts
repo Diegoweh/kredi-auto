@@ -7,7 +7,7 @@ export const site = {
   phoneHref: "tel:+526691101007",
   mapsUrl: "https://maps.app.goo.gl/SkkjQohGBD5deLmk6",
   mapsEmbedUrl:
-    "https://www.google.com/maps?q=krediauto+mazatlan&ll=23.2347826,-106.4282212&z=16&output=embed",
+    "https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d29329.825689776666!2d-106.44367096635328!3d23.23478117371085!3m2!1i1024!2i768!4f13.1!2m1!1skrediauto%20mazatlan!5e0!3m2!1ses-419!2smx!4v1790364797244!5m2!1ses-419!2smx",
   social: {
     facebook: "https://www.facebook.com/profile.php?id=61550311362989",
     instagram: "https://www.instagram.com/krediautomazatlan",

@@ -11,6 +11,7 @@ import {
 import {
   TRANSMISSIONS,
   BODY_TYPES,
+  PRICE_STEP,
   SORTS,
   type BodyType,
   type Car,
@@ -174,7 +175,14 @@ export function getFilterOptions(cars: Car[]) {
   const brands = [...new Set(cars.map((c) => c.brand))].sort((a, b) => a.localeCompare(b, "es"));
   const years = [...new Set(cars.map((c) => c.year))].sort((a, b) => b - a);
   const bodyTypes = BODY_TYPES.filter((t) => cars.some((c) => c.bodyType === t));
-  return { brands, years, bodyTypes };
+  const prices = cars.map((c) => c.price);
+  const price = prices.length
+    ? {
+        min: Math.floor(Math.min(...prices) / PRICE_STEP) * PRICE_STEP,
+        max: Math.ceil(Math.max(...prices) / PRICE_STEP) * PRICE_STEP,
+      }
+    : null;
+  return { brands, years, bodyTypes, price };
 }
 
 // ---------- Admin (uncached) ----------

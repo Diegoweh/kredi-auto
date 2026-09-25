@@ -87,3 +87,32 @@ export const ExpandIcon = (p: IconProps) => (
     <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
   </svg>
 );
+
+export const QuoteIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" {...stroke(p)}>
+    <rect x="5" y="3" width="14" height="18" rx="2" />
+    <path d="M8.5 7h7M8.5 11h1M12 11h1M15.5 11h0M8.5 14.5h1M12 14.5h1M15.5 14.5v2.5M8.5 18h4.5" />
+  </svg>
+);
+
+export const OfferIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" {...stroke(p)}>
+    <path d="M3.5 12.5V5a1.5 1.5 0 0 1 1.5-1.5h7.5l8 8a1.5 1.5 0 0 1 0 2.1l-7 7a1.5 1.5 0 0 1-2.1 0l-7.9-8.1Z" />
+    <circle cx="8" cy="8" r="1.5" />
+  </svg>
+);
+
+export const CalendarCheckIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" {...stroke(p)}>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+    <path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4" />
+  </svg>
+);
+
+export const CashIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" {...stroke(p)}>
+    <rect x="2.5" y="6" width="19" height="12" rx="2" />
+    <circle cx="12" cy="12" r="2.5" />
+    <path d="M6 9.5v5M18 9.5v5" />
+  </svg>
+);

@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getFeaturedCars, getPublicCars } from "@/lib/cars";
 import { carName, type Car } from "@/lib/car-types";
 import { formatKm, formatPrice } from "@/lib/format";
+import { BRAND_LOGOS, brandHref, brandLogoSrc } from "@/lib/brands";
 import { ArrowRightIcon } from "@/components/icons";
 import { CarPhoto } from "@/components/site/car-photo";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
@@ -105,6 +107,9 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* Brands */}
+      <BrandsSection cars={cars} />
+
       {/* Why us */}
       <section className="bg-paper py-16 sm:py-24" aria-labelledby="por-que">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
@@ -169,5 +174,48 @@ function FeaturedItem({ car }: { car: Car }) {
         </p>
       </Link>
     </li>
+  );
+}
+
+function BrandsSection({ cars }: { cars: Car[] }) {
+  const counts = new Map<string, number>();
+  for (const car of cars) counts.set(car.brand, (counts.get(car.brand) ?? 0) + 1);
+
+  return (
+    <section className="border-t border-line py-16 sm:py-20" aria-labelledby="marcas">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="max-w-xl">
+          <h2 id="marcas" className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Busca por marca
+          </h2>
+          <p className="mt-3 text-muted">Elige tu marca favorita y ve directo a los autos que tenemos.</p>
+        </div>
+        <ul className="mt-10 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7">
+          {BRAND_LOGOS.map(({ name, logo }) => {
+            const count = counts.get(name) ?? 0;
+            return (
+              <li key={name}>
+                <Link
+                  href={brandHref(name)}
+                  className="group flex h-full flex-col items-center gap-3 rounded-xl border border-line bg-white px-2 pt-5 pb-4 text-center transition hover:-translate-y-0.5 hover:border-brand hover:shadow-[0_8px_24px_-12px_rgb(15_23_42/0.25)]"
+                >
+                  <Image
+                    src={brandLogoSrc(logo)}
+                    alt=""
+                    width={48}
+                    height={48}
+                    className="size-12 object-contain grayscale-[35%] transition group-hover:grayscale-0"
+                  />
+                  <span className="text-sm font-semibold group-hover:text-brand-600">{name}</span>
+                  <span className="-mt-2 text-xs text-muted tabular-nums">
+                    {count > 0 ? `${count} ${count === 1 ? "auto" : "autos"}` : "Consúltanos"}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
   );
 }
